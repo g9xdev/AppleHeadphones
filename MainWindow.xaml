@@ -1,0 +1,107 @@
+<Window
+    x:Class="AirPodsBattery.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Grid Padding="28" RowSpacing="18">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <StackPanel Grid.Row="0" Spacing="4">
+            <TextBlock x:Name="ModelText"
+                       Text="Searching for AirPods…"
+                       Style="{StaticResource TitleTextBlockStyle}"/>
+            <TextBlock x:Name="StatusText"
+                       Text="Make sure Bluetooth is on and your AirPods are nearby."
+                       Style="{StaticResource CaptionTextBlockStyle}"
+                       Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+        </StackPanel>
+
+        <!-- Per-component batteries (from BLE advertisements) -->
+        <Grid Grid.Row="1" ColumnSpacing="14">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Left / single -->
+            <Border Grid.Column="0" x:Name="LeftCard"
+                    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                    BorderThickness="1" CornerRadius="8" Padding="16">
+                <StackPanel Spacing="8">
+                    <TextBlock x:Name="LeftLabel" Text="Left"
+                               Style="{StaticResource BodyStrongTextBlockStyle}"/>
+                    <TextBlock x:Name="LeftPercent" Text="—"
+                               FontSize="30" FontWeight="SemiBold"/>
+                    <ProgressBar x:Name="LeftBar" Minimum="0" Maximum="100" Value="0"/>
+                    <TextBlock x:Name="LeftCharge" Text=""
+                               Style="{StaticResource CaptionTextBlockStyle}"
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Right -->
+            <Border Grid.Column="1" x:Name="RightCard"
+                    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                    BorderThickness="1" CornerRadius="8" Padding="16">
+                <StackPanel Spacing="8">
+                    <TextBlock Text="Right" Style="{StaticResource BodyStrongTextBlockStyle}"/>
+                    <TextBlock x:Name="RightPercent" Text="—"
+                               FontSize="30" FontWeight="SemiBold"/>
+                    <ProgressBar x:Name="RightBar" Minimum="0" Maximum="100" Value="0"/>
+                    <TextBlock x:Name="RightCharge" Text=""
+                               Style="{StaticResource CaptionTextBlockStyle}"
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Case -->
+            <Border Grid.Column="2" x:Name="CaseCard"
+                    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                    BorderThickness="1" CornerRadius="8" Padding="16">
+                <StackPanel Spacing="8">
+                    <TextBlock Text="Case" Style="{StaticResource BodyStrongTextBlockStyle}"/>
+                    <TextBlock x:Name="CasePercent" Text="—"
+                               FontSize="30" FontWeight="SemiBold"/>
+                    <ProgressBar x:Name="CaseBar" Minimum="0" Maximum="100" Value="0"/>
+                    <TextBlock x:Name="CaseCharge" Text=""
+                               Style="{StaticResource CaptionTextBlockStyle}"
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <!-- System-reported battery (from Windows / HFP) -->
+        <Border Grid.Row="2"
+                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                BorderThickness="1" CornerRadius="8" Padding="16">
+            <StackPanel Spacing="6">
+                <TextBlock Text="Reported by Windows (paired device)"
+                           Style="{StaticResource BodyStrongTextBlockStyle}"/>
+                <TextBlock x:Name="SystemBatteryText"
+                           Text="No battery level reported yet."
+                           Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Footer / refresh -->
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Spacing="12">
+            <Button x:Name="RefreshButton" Content="Refresh now" Click="RefreshButton_Click"/>
+            <TextBlock x:Name="LastUpdatedText"
+                       VerticalAlignment="Center"
+                       Style="{StaticResource CaptionTextBlockStyle}"
+                       Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+        </StackPanel>
+    </Grid>
+</Window>
